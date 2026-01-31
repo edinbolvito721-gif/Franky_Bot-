@@ -3,10 +3,10 @@ const qrcode = require('qrcode-terminal');
 
 const client = new Client({
     authStrategy: new LocalAuth(),
-    puppeteer: { 
-        handleSIGINT: false,
+    puppeteer: {
+        executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
         args: [
-            '--no-sandbox', 
+            '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-dev-shm-usage',
             '--disable-accelerated-2d-canvas',
@@ -14,25 +14,23 @@ const client = new Client({
             '--no-zygote',
             '--single-process',
             '--disable-gpu'
-        ] 
+        ],
     }
 });
 
-client.on('qr', qr => {
-    // Esto es lo que imprimirá el QR en los logs de Railway
-    qrcode.generate(qr, {small: true});
+client.on('qr', (qr) => {
     console.log('>>> ESCANEA ESTE QR <<<');
+    qrcode.generate(qr, { small: true });
 });
 
 client.on('ready', () => {
-    console.log('✅ ¡Franky está vivo en la nube!');
+    console.log('¡Franky está vivo y conectado!');
 });
 
-client.on('message', async (msg) => {
-    if (msg.body.toLowerCase() === '!menu') {
-        msg.reply('¡Hola! Soy Franky y ya estoy funcionando desde Railway.');
+client.on('message', message => {
+    if (message.body.toLowerCase() === 'hola') {
+        message.reply('¡Hola! Soy Franky, tu bot de WhatsApp. 🤖');
     }
 });
 
 client.initialize();
-

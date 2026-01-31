@@ -1,7 +1,7 @@
 {
-  "name": "franky-bot",
+  "name": "franky-bot-completo",
   "version": "1.0.0",
-  "description": "Bot de WhatsApp en Railway",
+  "description": "Bot de WhatsApp para Railway",
   "main": "index.js",
   "dependencies": {
     "whatsapp-web.js": "^1.23.0",

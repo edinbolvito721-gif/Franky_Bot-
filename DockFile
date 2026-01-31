@@ -1,7 +1,23 @@
 FROM ghcr.io/puppeteer/puppeteer:latest
+
 USER root
+
+# Instalamos librerías del sistema necesarias para que WhatsApp Web abra
+RUN apt-get update && apt-get install -y \
+    libnss3 \
+    libatk-bridge2.0-0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
+
 COPY package*.json ./
 RUN npm install
+
 COPY . .
+
 CMD ["node", "index.js"]
